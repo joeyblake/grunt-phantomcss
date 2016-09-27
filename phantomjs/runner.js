@@ -15,9 +15,11 @@
 var fs = require('fs');
 var s = fs.separator;
 var path =  require('path');
+var system = require('system');
 
 // Parse arguments passed in from the grunt task
-var args = JSON.parse(phantom.args[0]);
+var args = JSON.parse(system.args[1]);
+
 
 // Get viewport arguments (width | height)
 var viewportSize = {
@@ -39,7 +41,10 @@ phantom.injectJs(phantom.casperPath + s + 'bin' + s + 'bootstrap.js');
 var casper = require('casper').create({
   viewportSize: viewportSize,
   logLevel: args.logLevel,
-  verbose: true
+  verbose: true,
+  pageSettings: {
+    loadImages: true
+  }
 });
 
 // Require and initialise PhantomCSS module
